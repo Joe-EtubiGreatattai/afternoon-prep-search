@@ -1,0 +1,209 @@
+swagger: '2.0'
+info:
+  title: Learning Platform API
+  description: API for searching courses, summaries, bookmarked questions, and posts.
+  version: 1.0.0
+
+paths:
+  /search/all:
+    post:
+      summary: Search for courses, summaries, bookmarked questions, and posts
+      description: Perform a search across courses, summaries, bookmarked questions, and posts based on the provided query and user ID.
+      parameters:
+        - name: search
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              q:
+                type: string
+                description: The search query
+              userId:
+                type: string
+                description: The user ID
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              courses:
+                type: array
+                items:
+                  $ref: '#/definitions/Course'
+              summaries:
+                type: array
+                items:
+                  $ref: '#/definitions/Summary'
+              bookmarks:
+                type: array
+                items:
+                  $ref: '#/definitions/Question'
+              posts:
+                type: array
+                items:
+                  $ref: '#/definitions/Post'
+        '500':
+          description: Internal Server Error
+
+  /search/courses:
+    post:
+      summary: Search for courses
+      description: Perform a search across courses based on the provided query.
+      parameters:
+        - name: search
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              q:
+                type: string
+                description: The search query
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Course'
+        '500':
+          description: Internal Server Error
+
+  /search/summaries:
+    post:
+      summary: Search for summaries
+      description: Perform a search across summaries based on the provided query.
+      parameters:
+        - name: search
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              q:
+                type: string
+                description: The search query
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Summary'
+        '500':
+          description: Internal Server Error
+
+  /search/bookmarks:
+    post:
+      summary: Search for bookmarked questions
+      description: Perform a search across bookmarked questions based on the provided query and user ID.
+      parameters:
+        - name: search
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              q:
+                type: string
+                description: The search query
+              userId:
+                type: string
+                description: The user ID
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Question'
+        '500':
+          description: Internal Server Error
+
+  /search/posts:
+    post:
+      summary: Search for posts
+      description: Perform a search across posts based on the provided query.
+      parameters:
+        - name: search
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              q:
+                type: string
+                description: The search query
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Post'
+        '500':
+          description: Internal Server Error
+
+definitions:
+  Course:
+    type: object
+    properties:
+      _id:
+        type: string
+      title:
+        type: string
+      description:
+        type: string
+      syllabus:
+        type: string
+
+  Summary:
+    type: object
+    properties:
+      _id:
+        type: string
+      book:
+        type: string
+      title:
+        type: string
+      summary:
+        type: string
+      question:
+        type: string
+      description:
+        type: string
+
+  Question:
+    type: object
+    properties:
+      _id:
+        type: string
+      text:
+        type: string
+
+  Post:
+    type: object
+    properties:
+      _id:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+      author:
+        type: string
+      title:
+        type: string
+      body:
+        type: string
+      published:
+        type: boolean
+      type:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      slug:
+        type: string
