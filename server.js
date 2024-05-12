@@ -6,6 +6,7 @@ const bookmarkRoutes = require('./routes/bookmarkRoute');
 const summaryRoutes = require('./routes/summaryRoute');
 const searchRoutes = require('./routes/searchRoute');
 const postRoutes = require('./routes/postRoute');
+const AI = require('./routes/AIRoute');
 const swaggerRoutes = require('./swagger');
 const dotenv = require("dotenv");
 
@@ -24,6 +25,8 @@ app.use('/', bookmarkRoutes);
 app.use('/', summaryRoutes);
 app.use('/', searchRoutes);
 app.use('/', postRoutes);
+app.use('/', AI);
+// app.use('/', AI);
 app.use('/api-docs', swaggerRoutes);
 
 // Start the server
