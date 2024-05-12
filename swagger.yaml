@@ -1,14 +1,14 @@
 swagger: '2.0'
 info:
   title: Learning Platform API
-  description: API for searching courses, summaries, bookmarked questions, and posts.
+  description: API for searching courses, summaries, bookmarked questions, posts, and generating AI responses.
   version: 1.0.0
 
 paths:
   /search/all:
     post:
-      summary: Search for courses, summaries, bookmarked questions, and posts
-      description: Perform a search across courses, summaries, bookmarked questions, and posts based on the provided query and user ID.
+      summary: Search for courses, summaries, bookmarked questions, posts, and generate AI response
+      description: Perform a search across courses, summaries, bookmarked questions, posts, and generate an AI response based on the provided query and user ID.
       parameters:
         - name: search
           in: body
@@ -44,9 +44,36 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Post'
+              aiResponse:
+                type: string
+                description: The AI-generated response
         '500':
           description: Internal Server Error
-
+  /ai:
+    post:
+      summary: Generate AI response
+      description: Generate an AI response based on the provided query.
+      parameters:
+        - name: query
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              q:
+                type: string
+                description: The query
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              result:
+                type: string
+                description: The AI-generated response
+        '500':
+          description: Internal Server Error
   /search/courses:
     post:
       summary: Search for courses
@@ -70,7 +97,6 @@ paths:
               $ref: '#/definitions/Course'
         '500':
           description: Internal Server Error
-
   /search/summaries:
     post:
       summary: Search for summaries
@@ -94,7 +120,6 @@ paths:
               $ref: '#/definitions/Summary'
         '500':
           description: Internal Server Error
-
   /search/bookmarks:
     post:
       summary: Search for bookmarked questions
@@ -121,7 +146,6 @@ paths:
               $ref: '#/definitions/Question'
         '500':
           description: Internal Server Error
-
   /search/posts:
     post:
       summary: Search for posts
@@ -145,6 +169,7 @@ paths:
               $ref: '#/definitions/Post'
         '500':
           description: Internal Server Error
+
 
 definitions:
   Course:
